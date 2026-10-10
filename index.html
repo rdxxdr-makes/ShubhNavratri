@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Shubh Navratri | Divine Blessings & 108 Naam-Jap</title>
+
+  <!-- Google Fonts: Cinzel Decorative, Rozha One, Poppins, Great Vibes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-midnight: #090314;
+      --bg-deep-purple: #170727;
+      --bg-royal-indigo: #260f3d;
+      --gold-primary: #ffd700;
+      --gold-deep: #c69214;
+      --gold-glow: rgba(255, 215, 0, 0.45);
+      --gold-subtle: rgba(255, 215, 0, 0.2);
+      --saffron: #f37324;
+      --saffron-bright: #ff9f1a;
+      --royal-red: #d6223a;
+      --crimson-deep: #9e1022;
+      --kumkum: #b80d22;
+      --lotus-pink: #e056fd;
+      --card-bg: rgba(30, 10, 48, 0.65);
+      --card-border: rgba(255, 215, 0, 0.28);
+      --text-gold: #ffe7a3;
+      --active-day-color: #ffd700;
+      --diya-glow: #ff7700;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 15%, #2a0c44 0%, var(--bg-deep-purple) 40%, var(--bg-midnight) 100%);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Interactive Canvas */
+    #fx-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* =========================================
+       FESTIVE 3D ENVELOPE INTRO OVERLAY
+       ========================================= */
+    .envelope-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: radial-gradient(circle at 50% 30%, #2f093d 0%, #170420 50%, #08010d 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      perspective: 1200px;
+      transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .envelope-overlay.unveiled {
+      opacity: 0;
+      transform: scale(1.12);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 1 / 1.18;
+      max-height: 82vh;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      animation: envelopeFloat 4.6s ease-in-out infinite alternate;
+      transition: transform 0.3s ease;
+    }
+
+    .envelope-wrapper:hover {
+      transform: translateY(-6px) scale(1.02);
+    }
+
+    @keyframes envelopeFloat {
+      0% {
+        transform: translateY(0px) rotateX(3deg) rotateY(-2deg);
+      }
+      100% {
+        transform: translateY(-12px) rotateX(-2deg) rotateY(3deg);
+      }
+    }
+
+    /* 3D Envelope Body */
+    .envelope-body {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #780d1e 0%, #b8142b 45%, #610916 100%);
+      border-radius: 20px;
+      border: 2px solid var(--gold-primary);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(214, 34, 58, 0.55), inset 0 0 25px rgba(255, 215, 0, 0.25);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+      transform-style: preserve-3d;
+    }
+
+    /* Traditional Indian Filigree Corners */
+    .filigree-corner {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--gold-primary);
+      pointer-events: none;
+      opacity: 0.75;
+    }
+    .fc-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-top-left-radius: 12px; }
+    .fc-tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-top-right-radius: 12px; }
+    .fc-bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-bottom-left-radius: 12px; }
+    .fc-br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-bottom-right-radius: 12px; }
+
+    /* Envelope Top Flap (folds open on tap) */
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48%;
+      background: linear-gradient(180deg, #941124 0%, #680917 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 2px solid var(--gold-primary);
+      transform-origin: top center;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+      pointer-events: none;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .envelope-wrapper.opening .envelope-flap {
+      transform: rotateX(175deg);
+    }
+
+    /* Dancing Silk Ribbon across Envelope */
+    .satin-ribbon-cross {
+      position: absolute;
+      top: 50%;
+      left: -5%;
+      width: 110%;
+      height: 46px;
+      background: linear-gradient(90deg, #d49a1b 0%, #ffd700 25%, #ff4d6d 50%, #ffd700 75%, #d49a1b 100%);
+      background-size: 200% auto;
+      animation: ribbonShine 4s linear infinite, ribbonDance 3s ease-in-out infinite alternate;
+      border-top: 1.5px solid #fff3a8;
+      border-bottom: 1.5px solid #fff3a8;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.5);
+      z-index: 15;
+      transform: translateY(-50%) rotate(-3deg);
+      pointer-events: none;
+      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes ribbonShine {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    @keyframes ribbonDance {
+      0% { transform: translateY(-50%) rotate(-3deg) scaleY(0.96); }
+      100% { transform: translateY(-50%) rotate(2.5deg) scaleY(1.04); }
+    }
+
+    .envelope-wrapper.opening .satin-ribbon-cross {
+      transform: translateY(-160%) rotate(-15deg) scale(0.6);
+      opacity: 0;
+    }
+
+    /* Auspicious Golden Wax Seal / Knot */
+    .envelope-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffeaa7 0%, #ffd700 45%, #b45309 85%, #78350f 100%);
+      border: 2px solid #fff;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), inset 0 0 10px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      color: #3f1a00;
+      font-size: 1.6rem;
+      cursor: pointer;
+      animation: sealPulse 2s infinite ease-in-out;
+      transition: all 0.6s ease;
+    }
+
+    .envelope-wrapper.opening .envelope-seal {
+      transform: translate(-50%, -50%) scale(1.6);
+      opacity: 0;
+    }
+
+    @keyframes sealPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 18px rgba(255, 215, 0, 0.7); }
+      50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 32px rgba(255, 215, 0, 1); }
+    }
+
+    /* Content displayed on front of envelope */
+    .envelope-content {
+      position: relative;
+      z-index: 8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    .envelope-img-frame {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, #ffd700, #ff8c2b, #d6223a, #ffd700);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), inset 0 0 10px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 0.3rem;
+      animation: auraGlowImg 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes auraGlowImg {
+      0% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+      100% { filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.85)); }
+    }
+
+    .envelope-featured-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      background: #330b14;
+    }
+
+    .envelope-uni-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-weight: 700;
+      font-size: clamp(0.92rem, 3.2vw, 1.15rem);
+      background: linear-gradient(135deg, #ffffff 0%, #ffe7a3 30%, #ffd700 65%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+      letter-spacing: 0.8px;
+      line-height: 1.35;
+      max-width: 90%;
+    }
+
+    .envelope-festive-msg {
+      font-family: 'Rozha One', serif;
+      font-size: clamp(1.2rem, 4.4vw, 1.55rem);
+      color: #ffe082;
+      text-shadow: 0 0 16px rgba(255, 159, 26, 0.85), 0 2px 4px rgba(0, 0, 0, 0.7);
+      letter-spacing: 1px;
+    }
+
+    .open-prompt-pill {
+      margin-top: 0.4rem;
+      background: rgba(15, 2, 22, 0.85);
+      border: 1px solid var(--gold-primary);
+      color: #ffd700;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      animation: bouncePrompt 2s infinite ease-in-out;
+    }
+
+    @keyframes bouncePrompt {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .auto-open-bar-wrap {
+      width: 140px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .auto-open-bar {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #ff8c2b);
+      transform-origin: left center;
+      animation: timerFill 6s linear forwards;
+    }
+
+    /* 7-Second Opened State Aura & Counter Pill */
+    .envelope-wrapper.opening {
+      box-shadow: 0 0 70px rgba(255, 215, 0, 0.8), 0 0 100px rgba(214, 34, 58, 0.7);
+      animation: envelopeOpenedFloat 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes envelopeOpenedFloat {
+      0% { transform: translateY(-8px) scale(1.03) rotateX(1deg); }
+      100% { transform: translateY(-16px) scale(1.05) rotateX(-2deg); }
+    }
+
+    .revealing-timer-pill {
+      display: none;
+      margin-top: 0.55rem;
+      background: rgba(25, 4, 35, 0.94);
+      border: 1.5px solid var(--gold-primary);
+      color: #ffd700;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.8px;
+      box-shadow: 0 0 18px rgba(255, 215, 0, 0.55);
+      animation: bouncePrompt 1.8s infinite ease-in-out;
+    }
+
+    .envelope-wrapper.opening .open-prompt-pill,
+    .envelope-wrapper.opening .auto-open-bar-wrap {
+      display: none;
+    }
+
+    .envelope-wrapper.opening .revealing-timer-pill {
+      display: inline-flex;
+    }
+
+    @keyframes timerFill {
+      0% { transform: scaleX(1); }
+      100% { transform: scaleX(0); }
+    }
+
+    /* =========================================
+       MAIN CARD SHELL & COMPONENTS
+       ========================================= */
+    .app-shell {
+      position: relative;
+      z-index: 2;
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 1rem 1.1rem 4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.2rem;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .app-shell.revealed {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .floating-audio-wrap {
+      position: fixed;
+      top: 18px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .audio-pill-btn {
+      background: rgba(32, 10, 52, 0.78);
+      border: 1.5px solid var(--gold-primary);
+      color: var(--gold-primary);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 16px rgba(255, 215, 0, 0.35), inset 0 0 8px rgba(255, 215, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .audio-pill-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.65);
+    }
+
+    .audio-waves-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid var(--gold-primary);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .audio-playing .audio-waves-ring {
+      animation: audioPulseRing 2s infinite ease-out;
+    }
+
+    @keyframes audioPulseRing {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    /* Toran Garland */
+    .toran-garland {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 0.5rem;
+    }
+
+    .toran-svg {
+      width: 100%;
+      max-width: 820px;
+      height: 38px;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
+    }
+
+    /* Hero Header */
+    .hero-header {
+      text-align: center;
+      position: relative;
+      margin-top: -0.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .shloka-banner {
+      font-family: 'Rozha One', serif;
+      color: var(--saffron-bright);
+      font-size: clamp(0.95rem, 3.4vw, 1.28rem);
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(255, 140, 43, 0.65);
+      margin-bottom: 0.25rem;
+    }
+
+    .main-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-weight: 900;
+      font-size: clamp(2.1rem, 7.5vw, 3.6rem);
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe7a3 25%, var(--gold-primary) 50%, #f59e0b 80%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 25px rgba(255, 215, 0, 0.35);
+      letter-spacing: 2px;
+    }
+
+    .sub-greeting {
+      font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+      color: #ffd8a8;
+      font-weight: 300;
+      letter-spacing: 0.8px;
+      margin-top: 0.35rem;
+    }
+
+    .silk-ribbon-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      margin: 1.4rem auto 0.6rem;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .silk-ribbon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 2.8rem;
+      background: linear-gradient(135deg, #7a0c1a 0%, #b31227 25%, #d6223a 50%, #b31227 75%, #7a0c1a 100%);
+      border-top: 2.5px solid var(--gold-primary);
+      border-bottom: 2.5px solid var(--gold-primary);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 20px rgba(214, 34, 58, 0.5), inset 0 1px 3px rgba(255, 255, 255, 0.4);
+      transform-style: preserve-3d;
+      animation: ribbon3DWave 5.5s infinite ease-in-out;
+      border-radius: 4px;
+    }
+
+    .silk-ribbon::before,
+    .silk-ribbon::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 32px;
+      height: 100%;
+      background: linear-gradient(135deg, #640813, #9e1022);
+      transform: translateY(-50%);
+      z-index: -1;
+      border-top: 2px solid var(--gold-primary);
+      border-bottom: 2px solid var(--gold-primary);
+    }
+
+    .silk-ribbon::before {
+      left: -20px;
+      clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    }
+
+    .silk-ribbon::after {
+      right: -20px;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .ribbon-text {
+      font-family: 'Cinzel Decorative', cursive;
+      font-weight: 700;
+      font-size: clamp(0.92rem, 3.2vw, 1.25rem);
+      color: #fff9db;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.7);
+      background: linear-gradient(90deg, #fff9db 0%, #ffd700 40%, #ffffff 50%, #ffd700 60%, #fff9db 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGoldShimmer 4s linear infinite;
+    }
+
+    @keyframes ribbon3DWave {
+      0%, 100% {
+        transform: rotateX(8deg) rotateY(-4deg) skewY(-0.8deg) translateY(0);
+      }
+      50% {
+        transform: rotateX(-6deg) rotateY(4deg) skewY(0.8deg) translateY(-4px);
+      }
+    }
+
+    @keyframes textGoldShimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .durga-sanctuary {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      aspect-ratio: 1 / 1.05;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.6rem 0 0.8rem;
+    }
+
+    .sacred-halo {
+      position: absolute;
+      width: 74%;
+      height: 74%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.32) 0%, rgba(255, 140, 43, 0.2) 48%, rgba(217, 27, 66, 0.06) 74%, transparent 100%);
+      animation: pulseHalo 4s ease-in-out infinite alternate;
+      z-index: 1;
+      pointer-events: none;
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+
+    .sacred-halo.halo-chant-pulse {
+      filter: drop-shadow(0 0 35px #ffd700) brightness(1.6);
+      transform: scale(1.12);
+    }
+
+    .mandala-rotator {
+      position: absolute;
+      width: 78%;
+      height: 78%;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 35px rgba(255, 193, 7, 0.28);
+      animation: spinMandala 55s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes spinMandala {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseHalo {
+      0% { transform: scale(0.97); opacity: 0.8; }
+      100% { transform: scale(1.06); opacity: 1; }
+    }
+
+    .durga-frame {
+      position: relative;
+      z-index: 2;
+      width: 220px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 28px rgba(255, 165, 0, 0.4));
+      transform-style: preserve-3d;
+      transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .durga-artwork {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .crown-glow {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle, #fff7cd 0%, #ffc107 45%, transparent 75%);
+      filter: blur(5px);
+      opacity: 0.95;
+      animation: crownSparkle 2.2s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @keyframes crownSparkle {
+      0%, 100% { transform: translateX(-50%) scale(0.85); opacity: 0.7; }
+      50% { transform: translateX(-50%) scale(1.25); opacity: 1; }
+    }
+
+    .aarti-orbit-guide {
+      position: absolute;
+      width: 96%;
+      height: 96%;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 215, 0, 0.32);
+      box-shadow: 0 0 16px rgba(255, 215, 0, 0.15);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .thali-container {
+      position: absolute;
+      z-index: 6;
+      width: 82px;
+      height: 82px;
+      transform: translate(-50%, -50%);
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.05s linear;
+      filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.85));
+    }
+
+    .thali-container:active {
+      cursor: grabbing;
+      filter: drop-shadow(0 12px 26px rgba(255, 165, 0, 0.7));
+    }
+
+    .thali-art {
+      width: 100%;
+      height: 100%;
+    }
+
+    .diya-flame {
+      animation: flameFlicker 0.15s infinite alternate ease-in-out;
+      transform-origin: 50% 80%;
+      filter: drop-shadow(0 0 10px var(--diya-glow));
+      transition: filter 0.5s ease;
+    }
+
+    .celebration-diyas .diya-flame {
+      filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 35px #ff7700) brightness(1.3);
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: scale(0.95) skewX(-1.5deg); opacity: 0.92; }
+      100% { transform: scale(1.08) skewX(2deg); opacity: 1; }
+    }
+
+    .aarti-hint {
+      position: absolute;
+      bottom: -10px;
+      font-size: 0.76rem;
+      color: #ffd8a8;
+      background: rgba(30, 8, 48, 0.88);
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+      z-index: 6;
+    }
+
+    .action-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.9rem;
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .shubh-btn {
+      background: linear-gradient(135deg, rgba(82, 23, 110, 0.8), rgba(41, 10, 58, 0.9));
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.8rem 1.25rem;
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+      touch-action: manipulation;
+    }
+
+    .shubh-btn:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 24px rgba(255, 165, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .shubh-btn:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    .chant-108-btn {
+      background: linear-gradient(135deg, #b80d22 0%, #e65100 50%, #d6223a 100%);
+      border: 1.5px solid #ffd700;
+      box-shadow: 0 6px 24px rgba(214, 34, 58, 0.55), 0 0 15px rgba(255, 215, 0, 0.3);
+      padding: 0.8rem 1.6rem;
+      font-size: 0.96rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .chant-progress-ring {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.42);
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: #ffd700;
+    }
+
+    .chant-completed-badge {
+      background: linear-gradient(135deg, #15803d, #22c55e);
+      border-color: #86efac;
+      color: #ffffff;
+      animation: pulseCompleted 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseCompleted {
+      0%, 100% { box-shadow: 0 0 12px rgba(34, 197, 94, 0.6); }
+      50% { box-shadow: 0 0 25px rgba(34, 197, 94, 0.9); }
+    }
+
+    /* Floating Curved Mantra Element */
+    .floating-mantra {
+      position: fixed;
+      font-family: 'Rozha One', serif;
+      font-size: 1.35rem;
+      color: #fff4ba;
+      text-shadow: 0 0 12px #ffd700, 0 0 24px #ff8c2b;
+      pointer-events: none;
+      z-index: 1000;
+      white-space: nowrap;
+      transition: opacity 0.2s linear;
+    }
+
+    .bell-icon-swing {
+      transform-origin: top center;
+    }
+
+    .bell-swinging {
+      animation: bellRinging 0.85s ease-in-out;
+    }
+
+    @keyframes bellRinging {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(24deg); }
+      40% { transform: rotate(-20deg); }
+      60% { transform: rotate(14deg); }
+      80% { transform: rotate(-8deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .golden-ornamental-divider {
+      width: 100%;
+      max-width: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 0.2rem 0;
+      opacity: 0.85;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    }
+
+    .divider-flower {
+      color: var(--gold-primary);
+      font-size: 0.95rem;
+      text-shadow: 0 0 10px var(--gold-primary);
+    }
+
+    .glass-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 1.8rem 1.6rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 215, 0, 0.18);
+      position: relative;
+    }
+
+    .blessing-card {
+      text-align: center;
+      background: radial-gradient(circle at top, rgba(120, 25, 75, 0.45) 0%, rgba(35, 12, 54, 0.82) 100%);
+      border: 1.5px solid rgba(255, 215, 0, 0.38);
+    }
+
+    .greeting-text {
+      font-size: clamp(1.02rem, 3.2vw, 1.28rem);
+      line-height: 1.7;
+      color: #fff7e6;
+      font-weight: 400;
+      margin-bottom: 0.9rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+    }
+
+    .greeting-highlight {
+      color: var(--gold-primary);
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    }
+
+    .mantra-chant-text {
+      font-family: 'Rozha One', serif;
+      font-size: clamp(1.3rem, 4.2vw, 1.75rem);
+      color: var(--saffron-bright);
+      text-shadow: 0 0 18px rgba(255, 140, 43, 0.7);
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .navratri-days-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 1.35rem;
+      text-align: center;
+      color: var(--gold-primary);
+      letter-spacing: 1.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 0.45rem;
+      width: 100%;
+    }
+
+    @media (max-width: 680px) {
+      .days-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      .days-grid > button:last-child {
+        grid-column: span 1;
+      }
+    }
+
+    .day-btn {
+      background: rgba(22, 6, 34, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 14px;
+      padding: 0.6rem 0.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: #eee;
+    }
+
+    .day-btn:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-2px);
+    }
+
+    .day-btn.active {
+      background: rgba(65, 18, 98, 0.95);
+      border: 2px solid var(--active-day-color);
+      box-shadow: 0 0 18px var(--active-day-color);
+      transform: scale(1.05);
+    }
+
+    .day-color-dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .day-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* 3D Interactive Diorama Stage */
+    .day-stage-container {
+      background: linear-gradient(145deg, rgba(16, 4, 26, 0.9), rgba(28, 8, 44, 0.85));
+      border: 1.5px solid var(--active-day-color);
+      border-radius: 18px;
+      padding: 1.2rem;
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 1.4rem;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.15);
+      transition: border-color 0.4s ease;
+    }
+
+    @media (max-width: 600px) {
+      .day-stage-container {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+    }
+
+    .diorama-frame {
+      width: 190px;
+      height: 190px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #1f0b33, #090212);
+      border: 1.5px solid rgba(255, 215, 0, 0.35);
+      box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8), 0 8px 20px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 600px;
+    }
+
+    .diorama-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+    }
+
+    .day-content-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .day-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .day-form-title {
+      font-family: 'Rozha One', serif;
+      font-size: 1.4rem;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .day-color-badge {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .day-mantra-highlight {
+      font-family: 'Rozha One', serif;
+      font-size: 1.05rem;
+      color: var(--gold-primary);
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    }
+
+    .day-desc-paragraph {
+      font-size: 0.88rem;
+      color: #ebdff5;
+      line-height: 1.6;
+    }
+
+    /* =========================================
+       SIGNATURE FOOTER: Made by Rudraksh Goyal
+       ========================================= */
+    .festive-footer {
+      text-align: center;
+      color: #d1b8ea;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.2rem;
+      width: 100%;
+    }
+
+    .rudraksh-signature-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0.75rem 2.2rem;
+      background: radial-gradient(circle, rgba(46, 12, 72, 0.75) 0%, rgba(20, 5, 34, 0.85) 100%);
+      border: 1.5px solid rgba(255, 215, 0, 0.38);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 215, 0, 0.25);
+      animation: signatureFloatWave 4s ease-in-out infinite alternate;
+      max-width: 95%;
+    }
+
+    @keyframes signatureFloatWave {
+      0% {
+        transform: translateY(0px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 77, 109, 0.25);
+      }
+      100% {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 215, 0, 0.4);
+      }
+    }
+
+    .signature-calligraphy-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.7rem, 5.2vw, 2.25rem);
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe7a3 25%, #ffd700 50%, #ff85a1 75%, #ffffff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 14px rgba(255, 77, 109, 0.4), 0 0 22px rgba(255, 215, 0, 0.45);
+      animation: signatureGoldPinkShimmer 5.5s linear infinite;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    @keyframes signatureGoldPinkShimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .beating-heart {
+      color: #ff3366;
+      font-size: 1.05rem;
+      animation: heartBeating 1.4s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+      filter: drop-shadow(0 0 8px rgba(255, 51, 102, 0.8));
+    }
+
+    .footer-diya-icon {
+      font-size: 1.25rem;
+      filter: drop-shadow(0 0 8px #ff9900);
+      animation: diyaFlickerLight 1.8s infinite alternate;
+    }
+
+    @keyframes heartBeating {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.28); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.22); }
+      70% { transform: scale(1); }
+    }
+
+    @keyframes diyaFlickerLight {
+      0% { filter: drop-shadow(0 0 6px #ff7700); }
+      100% { filter: drop-shadow(0 0 14px #ffd700); }
+    }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(30, 8, 48, 0.95);
+      border: 1.5px solid var(--gold-primary);
+      color: #fff;
+      padding: 0.75rem 1.6rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 18px rgba(255, 215, 0, 0.4);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+      text-align: center;
+      max-width: 90vw;
+    }
+
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* 108 Chants Celebration Modal */
+    .celebration-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 3, 23, 0.75);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      padding: 1.5rem;
+    }
+
+    .celebration-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .celebration-box {
+      background: radial-gradient(circle at center, #350d4f, #150422);
+      border: 2px solid var(--gold-primary);
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), inset 0 0 25px rgba(255, 215, 0, 0.2);
+      border-radius: 24px;
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+      transform: scale(0.85);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .celebration-overlay.active .celebration-box {
+      transform: scale(1);
+    }
+
+    /* Accessibility: Respect Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, .silk-ribbon, .sacred-halo, .mandala-rotator, .diya-flame, .shubh-btn, .envelope-wrapper, .satin-ribbon-cross, .envelope-seal, .rudraksh-signature-pill {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fx-canvas"></canvas>
+
+  <!-- ========================================================
+       ANIMATED 3D FESTIVE ENVELOPE INTRO OVERLAY
+       ======================================================== -->
+  <section class="envelope-overlay" id="envelopeOverlay" aria-label="Festive Navratri Invitation Envelope">
+    <div class="envelope-wrapper" id="envelopeWrapper" role="button" tabindex="0" title="Tap to Open Navratri Greeting Card">
+      <!-- 3D Flap -->
+      <div class="envelope-flap"></div>
+
+      <!-- Traditional Corner Filigrees -->
+      <div class="envelope-body">
+        <span class="filigree-corner fc-tl"></span>
+        <span class="filigree-corner fc-tr"></span>
+        <span class="filigree-corner fc-bl"></span>
+        <span class="filigree-corner fc-br"></span>
+
+        <!-- Inside Content Showcase -->
+        <div class="envelope-content">
+          <div class="envelope-img-frame">
+            <img 
+              class="envelope-featured-img" 
+              id="envelopeImg"
+              src="https://i.ibb.co/spPPW4yQ/AMMA.jpg" 
+              alt="Amma Divine Grace - Amrita Vishwa Vidyapeetham" 
+              loading="eager"
+              onerror="this.onerror=null; this.src='https://placehold.co/240x240/6b0f20/ffd700?text=AMMA+DIVINE';"
+            />
+          </div>
+
+          <h2 class="envelope-uni-title">Amrita Vishwa Vidyapeetham Haridwar</h2>
+          <p class="envelope-festive-msg">Excited for navratri</p>
+
+          <div class="open-prompt-pill">
+            <i class="fa-solid fa-hands-praying"></i>
+            <span>Tap to Untie &amp; Open</span>
+          </div>
+
+          <div class="revealing-timer-pill" id="revealingPill">
+            <i class="fa-solid fa-sparkles fa-spin" style="--fa-animation-duration: 4s;"></i>
+            <span>Revealing card in <strong id="revealSecText">7</strong>s...</span>
+          </div>
+
+          <div class="auto-open-bar-wrap" title="Auto-revealing in 6 seconds">
+            <div class="auto-open-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dancing Satin Ribbon -->
+      <div class="satin-ribbon-cross"></div>
+
+      <!-- Golden Seal / Knot -->
+      <div class="envelope-seal" id="envelopeSeal">
+        <i class="fa-solid fa-om"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Discreet Floating Audio Toggle -->
+  <div class="floating-audio-wrap">
+    <button class="audio-pill-btn" id="audioToggleBtn" title="Toggle Spiritual Background Music" aria-label="Toggle Spiritual Music">
+      <div class="audio-waves-ring"></div>
+      <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
+    </button>
+  </div>
+
+  <!-- MAIN CARD SHELL -->
+  <main class="app-shell" id="appShell">
+    
+    <!-- Toran Marigold Garland Top Border -->
+    <header class="toran-garland" aria-hidden="true">
+      <svg class="toran-svg" viewBox="0 0 800 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,4 Q100,28 200,4 Q300,28 400,4 Q500,28 600,4 Q700,28 800,4" stroke="#ff8c2b" stroke-width="3" fill="none"/>
+        <g id="toran-flowers">
+          <circle cx="50" cy="18" r="8" fill="#ff6f00"/><circle cx="50" cy="18" r="4.5" fill="#ffd700"/><path d="M50,18 L50,34 L44,25 Z" fill="#2e7d32"/>
+          <circle cx="150" cy="18" r="8" fill="#ffd700"/><circle cx="150" cy="18" r="4.5" fill="#ff6f00"/><path d="M150,18 L150,34 L156,25 Z" fill="#2e7d32"/>
+          <circle cx="250" cy="18" r="8" fill="#ff6f00"/><circle cx="250" cy="18" r="4.5" fill="#ffd700"/><path d="M250,18 L250,34 L244,25 Z" fill="#2e7d32"/>
+          <circle cx="350" cy="18" r="8" fill="#ffd700"/><circle cx="350" cy="18" r="4.5" fill="#ff6f00"/><path d="M350,18 L350,34 L356,25 Z" fill="#2e7d32"/>
+          <circle cx="450" cy="18" r="8" fill="#ff6f00"/><circle cx="450" cy="18" r="4.5" fill="#ffd700"/><path d="M450,18 L450,34 L444,25 Z" fill="#2e7d32"/>
+          <circle cx="550" cy="18" r="8" fill="#ffd700"/><circle cx="550" cy="18" r="4.5" fill="#ff6f00"/><path d="M550,18 L550,34 L556,25 Z" fill="#2e7d32"/>
+          <circle cx="650" cy="18" r="8" fill="#ff6f00"/><circle cx="650" cy="18" r="4.5" fill="#ffd700"/><path d="M650,18 L650,34 L644,25 Z" fill="#2e7d32"/>
+          <circle cx="750" cy="18" r="8" fill="#ffd700"/><circle cx="750" cy="18" r="4.5" fill="#ff6f00"/><path d="M750,18 L750,34 L756,25 Z" fill="#2e7d32"/>
+        </g>
+      </svg>
+    </header>
+
+    <!-- Header Titles -->
+    <section class="hero-header">
+      <div class="shloka-banner">॥ सर्वमङ्गलमाङ्गल्ये शिवे सर्वार्थसाधिके ॥</div>
+      <h1 class="main-title">SHUBH NAVRATRI</h1>
+      <p class="sub-greeting">Embrace the Divine Blessings of Navdurga &bull; Festival of Light &amp; Power</p>
+
+      <!-- 3D Waving Silk Ribbon -->
+      <div class="silk-ribbon-wrapper">
+        <div class="silk-ribbon">
+          <span class="ribbon-text">Let’s Welcome Maa Durga Home</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Maa Durga Sanctuary & Aarti Orbit -->
+    <section class="durga-sanctuary" id="durgaSanctuary" aria-label="Devotional Aarti Sanctuary">
+      <div class="sacred-halo" id="sacredHalo"></div>
+      <div class="mandala-rotator"></div>
+      <div class="crown-glow"></div>
+
+      <!-- Respectful 3D-styled SVG avatar with automatic local image fallback -->
+      <div class="durga-frame" id="durgaFrame">
+        <svg class="durga-artwork" id="durgaSvg" viewBox="0 0 320 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sacred Illustration of Maa Durga">
+          <defs>
+            <linearGradient id="mukutGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffeaa7"/>
+              <stop offset="45%" stop-color="#ffd700"/>
+              <stop offset="100%" stop-color="#d97706"/>
+            </linearGradient>
+            <linearGradient id="sariGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e11d48"/>
+              <stop offset="50%" stop-color="#be123c"/>
+              <stop offset="100%" stop-color="#881337"/>
+            </linearGradient>
+            <filter id="goldenGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+
+          <!-- Golden Prabhavali Arch -->
+          <circle cx="160" cy="155" r="115" stroke="url(#mukutGrad)" stroke-width="4" stroke-dasharray="6 4" opacity="0.8"/>
+          <circle cx="160" cy="155" r="125" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/>
+
+          <!-- Trishul Backing (Sacred Trident) -->
+          <path d="M160,20 L160,110 M142,42 C142,65 160,75 160,75 C160,75 178,65 178,42 M160,15 L152,40 L168,40 Z" stroke="url(#mukutGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#goldenGlow)"/>
+
+          <!-- Crown / Mukut -->
+          <path d="M125,100 L160,45 L195,100 L180,105 L160,72 L140,105 Z" fill="url(#mukutGrad)" filter="url(#goldenGlow)"/>
+          <polygon points="160,40 164,48 160,56 156,48" fill="#ff0055"/>
+          <circle cx="160" cy="78" r="4.5" fill="#d91b42"/>
+          <circle cx="145" cy="90" r="3" fill="#2563eb"/>
+          <circle cx="175" cy="90" r="3" fill="#2563eb"/>
+
+          <!-- Face Contour -->
+          <path d="M126,110 Q160,104 194,110 Q196,165 160,188 Q124,165 126,110 Z" fill="#ffd8ba"/>
+
+          <!-- Hair Tresses -->
+          <path d="M126,110 C110,135 106,175 112,215 C116,190 125,160 134,130 Z" fill="#1f0a14"/>
+          <path d="M194,110 C210,135 214,175 208,215 C204,190 195,160 186,130 Z" fill="#1f0a14"/>
+
+          <!-- Third Eye & Chandan Tilak -->
+          <path d="M160,116 C157,122 157,128 160,132 C163,128 163,122 160,116 Z" fill="#b91c1c"/>
+          <circle cx="160" cy="124" r="1.5" fill="#fef08a"/>
+          <path d="M152,114 Q160,110 168,114" stroke="#fef08a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <circle cx="160" cy="135" r="2.2" fill="#dc2626"/>
+
+          <!-- Divine Eyes tracking Aarti -->
+          <g id="durgaEyes">
+            <path d="M136,137 Q146,132 153,138 Q145,145 136,137 Z" fill="#ffffff" stroke="#22050c" stroke-width="1"/>
+            <circle id="leftPupil" cx="145" cy="137.5" r="3.2" fill="#2b0a1a"/>
+            <circle cx="146" cy="136.5" r="1" fill="#ffffff"/>
+            <path d="M134,133 Q144,128 154,134" stroke="#2b0a1a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+            <path d="M167,138 Q174,132 184,137 Q175,145 167,138 Z" fill="#ffffff" stroke="#22050c" stroke-width="1"/>
+            <circle id="rightPupil" cx="175" cy="137.5" r="3.2" fill="#2b0a1a"/>
+            <circle cx="176" cy="136.5" r="1" fill="#ffffff"/>
+            <path d="M166,134 Q176,128 186,133" stroke="#2b0a1a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          </g>
+
+          <!-- Nose, Golden Nath, and Serene Lips -->
+          <path d="M160,138 L158,154 L163,154" stroke="#d49a75" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <circle cx="155" cy="154" r="5" stroke="url(#mukutGrad)" stroke-width="1.5" fill="none"/>
+          <circle cx="153" cy="157" r="1.8" fill="#e11d48"/>
+          <path d="M152,165 Q160,172 168,165" stroke="#b91c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+          <!-- Saree & Heavy Zari Jewellery -->
+          <path d="M110,215 Q160,195 210,215 L225,290 Q160,310 95,290 Z" fill="url(#sariGrad)"/>
+          <path d="M134,185 Q160,205 186,185" stroke="url(#mukutGrad)" stroke-width="4" fill="none"/>
+          <path d="M128,198 Q160,225 192,198" stroke="url(#mukutGrad)" stroke-width="3" fill="none"/>
+          <circle cx="160" cy="214" r="5" fill="#f59e0b"/>
+          <circle cx="160" cy="214" r="2.5" fill="#be123c"/>
+
+          <!-- Abhaya Mudra Blessing Hand -->
+          <g transform="translate(185, 175) scale(0.9)">
+            <path d="M12,18 C12,8 24,6 26,18 L26,38 C26,45 15,48 10,40 Z" fill="#ffd8ba"/>
+            <rect x="8" y="36" width="20" height="5" rx="2" fill="url(#mukutGrad)"/>
+            <circle cx="19" cy="24" r="4.5" fill="#dc2626"/>
+          </g>
+
+          <!-- Lotus Seat / Blossom Base -->
+          <g transform="translate(60, 270) scale(1)">
+            <path d="M50,30 Q100,5 150,30 Q100,55 50,30 Z" fill="#e11d48" opacity="0.9"/>
+            <path d="M30,22 Q50,-5 80,18" stroke="#f43f5e" stroke-width="3" fill="#be123c"/>
+            <path d="M170,22 Q150,-5 120,18" stroke="#f43f5e" stroke-width="3" fill="#be123c"/>
+            <path d="M75,25 Q100,0 125,25" fill="#fb7185"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Orbit Guide Ring -->
+      <div class="aarti-orbit-guide"></div>
+
+      <!-- Draggable Aarti Thali -->
+      <div class="thali-container" id="thaliContainer" title="Drag in circles around Maa Durga">
+        <svg class="thali-art" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="url(#brassGrad)"/>
+          <circle cx="50" cy="50" r="46" stroke="#f59e0b" stroke-width="2"/>
+          <circle cx="50" cy="50" r="41" stroke="#fff3c4" stroke-width="1.2" stroke-dasharray="3 2"/>
+
+          <circle cx="50" cy="50" r="28" fill="#881337"/>
+          <circle cx="50" cy="50" r="26" stroke="#ffd700" stroke-width="1"/>
+
+          <!-- Diya & Wick -->
+          <path d="M38,55 Q50,65 62,55 Q62,47 50,47 Q38,47 38,55 Z" fill="#d97706" stroke="#fbbf24" stroke-width="1"/>
+          <g class="diya-flame">
+            <path d="M50,46 C45,41 45,33 50,22 C55,33 55,41 50,46 Z" fill="url(#flameGrad)"/>
+            <ellipse cx="50" cy="40" rx="2.5" ry="4.5" fill="#ffffff" opacity="0.8"/>
+          </g>
+
+          <!-- Flowers & Incense -->
+          <circle cx="34" cy="42" r="4.5" fill="#ff6f00"/>
+          <circle cx="66" cy="42" r="4.5" fill="#ff6f00"/>
+          <circle cx="40" cy="62" r="4.5" fill="#ffd700"/>
+          <circle cx="60" cy="62" r="4.5" fill="#ffd700"/>
+          <line x1="28" y1="52" x2="16" y2="34" stroke="#451a03" stroke-width="2"/>
+          <circle cx="16" cy="34" r="1.5" fill="#ef4444"/>
+
+          <circle cx="50" cy="66" r="5" fill="#b91c1c" stroke="#f59e0b" stroke-width="1"/>
+          <circle cx="50" cy="66" r="2.5" fill="#e11d48"/>
+
+          <defs>
+            <linearGradient id="brassGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fef08a"/>
+              <stop offset="40%" stop-color="#f59e0b"/>
+              <stop offset="80%" stop-color="#b45309"/>
+              <stop offset="100%" stop-color="#78350f"/>
+            </linearGradient>
+            <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#dc2626"/>
+              <stop offset="40%" stop-color="#f97316"/>
+              <stop offset="80%" stop-color="#fde047"/>
+              <stop offset="100%" stop-color="#ffffff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="aarti-hint">
+        <i class="fa-solid fa-hands-praying" style="color:#ffd700;"></i>
+        <span>Rotate Thali clockwise to perform Aarti</span>
+      </div>
+    </section>
+
+    <!-- Devotional Action Controls -->
+    <section class="action-controls" aria-label="Devotional Actions">
+      <!-- 108 Naam Jap Counter Button -->
+      <button class="shubh-btn chant-108-btn" id="chant108Btn" title="Chant Jai Mata Di (108 Jap)">
+        <i class="fa-solid fa-om"></i>
+        <span>Jai Mata Di</span>
+        <span class="chant-progress-ring" id="chantDisplayBadge">
+          <i class="fa-solid fa-circle-notch" style="font-size:0.75rem;"></i>
+          <span id="chantCounterText">0 / 108</span>
+        </span>
+      </button>
+
+      <!-- Temple Bell -->
+      <button class="shubh-btn" id="bellBtn" title="Ring the sacred temple bell">
+        <i class="fa-solid fa-bell bell-icon-swing" id="bellIcon"></i>
+        <span>Ring Bell</span>
+      </button>
+
+      <!-- Auto Aarti Toggle -->
+      <button class="shubh-btn" id="autoAartiBtn" title="Continuous Circular Aarti">
+        <i class="fa-solid fa-arrows-rotate" id="aartiRotateIcon"></i>
+        <span id="autoAartiText">Auto Aarti</span>
+      </button>
+    </section>
+
+    <!-- Golden Ornamental Filigree Divider -->
+    <div class="golden-ornamental-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-flower">🪷 ✦ 🪷</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- Sacred Greeting & Shloka Card -->
+    <article class="glass-card blessing-card">
+      <p class="greeting-text">
+        May <span class="greeting-highlight">Maa Durga</span> bless your home with divine strength, serene peace, vibrant prosperity, and everlasting happiness.
+      </p>
+
+      <div class="mantra-chant-text">
+        या देवी सर्वभूतेषु शक्ति-रूपेण संस्थिता ।<br>
+        नमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः ॥
+      </div>
+    </article>
+
+    <!-- Golden Ornamental Filigree Divider -->
+    <div class="golden-ornamental-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-flower">✦ 🪔 ✦</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- 9 Sacred Navdurga Forms & 3D Miniature Diorama Stage -->
+    <section class="glass-card navratri-days-section">
+      <h2 class="section-title">
+        <i class="fa-solid fa-sun"></i>
+        <span>Navdurga • 9 Sacred Forms</span>
+        <i class="fa-solid fa-sun"></i>
+      </h2>
+
+      <!-- Day 1 - 9 Selector Grid -->
+      <div class="days-grid" id="daysGrid"></div>
+
+      <!-- Rich 3D Stage & Diorama Showcase -->
+      <div class="day-stage-container" id="dayStageContainer">
+        <!-- 3D Miniature Diorama Showcase -->
+        <div class="diorama-frame" id="dioramaFrame">
+          <!-- Dynamically Injected Rich Layered SVG Visual -->
+        </div>
+
+        <!-- Sacred Details Pane -->
+        <div class="day-content-pane">
+          <div class="day-header-row">
+            <h3 class="day-form-title" id="dayFormName">Day 1: Maa Shailaputri</h3>
+            <span class="day-color-badge">
+              <span class="day-color-dot" id="dayPillDot" style="background-color: #ffd700;"></span>
+              <span id="dayPillText">Sacred Yellow</span>
+            </span>
+          </div>
+          <div class="day-mantra-highlight" id="dayMantraText">वन्दे वाञ्छितलाभाय चन्द्रार्धकृतशेखराम् ।</div>
+          <p class="day-desc-paragraph" id="dayFormDesc">
+            Daughter of the Himalayas, riding Nandi bull. Embodies nature, pristine patience, and foundational spiritual devotion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upgraded Signature Footer -->
+    <footer class="festive-footer">
+      <div class="rudraksh-signature-pill">
+        <span class="footer-diya-icon">🪔</span>
+        <span class="signature-calligraphy-text">Made by Rudraksh Goyal</span>
+        <i class="fa-solid fa-heart beating-heart"></i>
+      </div>
+      <p style="font-size:0.75rem; color:#bfa6d9;">Happy Navratri &bull; Jai Mata Di &bull; May Maa shower everlasting blessings upon you</p>
+    </footer>
+
+  </main>
+
+  <!-- 108 Chants Celebration Modal -->
+  <div class="celebration-overlay" id="celebrationModal">
+    <div class="celebration-box">
+      <div style="font-size:2.8rem; margin-bottom:0.4rem;">🪷 🪔 🪷</div>
+      <h2 style="font-family:'Cinzel Decorative', cursive; color:#ffd700; font-size:1.6rem; margin-bottom:0.6rem;">108 Chants Complete</h2>
+      <p style="font-family:'Rozha One', serif; color:#ff9f1a; font-size:1.35rem; margin-bottom:0.8rem;">Jai Mata Di! 🙏</p>
+      <p style="color:#f3e8ff; font-size:0.9rem; line-height:1.6; margin-bottom:1.4rem;">
+        Your devotion and 108 Naam-Jap have been lovingly offered at the holy lotus feet of Maa Durga. May Her radiant presence fill your home with peace and abundance.
+      </p>
+      <button class="shubh-btn chant-108-btn" id="closeCelebrationBtn" style="padding:0.7rem 2rem;">
+        <span>Pranam Maa</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast-msg" id="toastMsg">Blessings Sent!</div>
+
+  <script>
+    // Audio Configuration
+    const CUSTOM_BELL_AUDIO_PATH = null;
+    const DURGA_CUSTOM_IMAGE_URL = 'assets/maa-durga-3d.png';
+
+    // 9 Sacred Navdurga Forms Data
+    const NAVDURGA_DATA = [
+      {
+        day: 1,
+        tithi: "Pratipada",
+        name: "Maa Shailaputri",
+        colorName: "Sacred Yellow & Dawn",
+        colorHex: "#ffd700",
+        mantra: "वन्दे वाञ्छितलाभाय चन्द्रार्धकृतशेखराम् ।",
+        desc: "Daughter of the Himalayas, riding Nandi bull. Embodies nature, serene patience, pristine dawn, and the grounding foundation of spiritual discipline.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="skyDawn" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff7e5f"/><stop offset="60%" stop-color="#feb47b"/><stop offset="100%" stop-color="#ffeaa7"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="200" fill="url(#skyDawn)"/>
+            <circle cx="100" cy="110" r="42" fill="#ffd700" opacity="0.8"/>
+            <polygon points="-20,200 40,70 110,200" fill="#ffffff" opacity="0.95"/>
+            <polygon points="40,70 65,115 110,200" fill="#dbeafe" opacity="0.9"/>
+            <polygon points="50,200 130,55 210,200" fill="#f8fafc"/>
+            <polygon points="130,55 160,110 210,200" fill="#cbd5e1"/>
+            <line x1="100" y1="50" x2="100" y2="140" stroke="#f59e0b" stroke-width="2.5"/>
+            <path d="M88,65 Q100,85 112,65" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+            <path d="M120,175 Q135,160 150,165 Q165,155 175,168 L175,190 L115,190 Z" fill="#334155" opacity="0.75"/>
+          </svg>
+        `
+      },
+      {
+        day: 2,
+        tithi: "Dwitiya",
+        name: "Maa Brahmacharini",
+        colorName: "Vibrant Green",
+        colorHex: "#22c55e",
+        mantra: "दधाना करपद्माभ्यामक्षमालाकमण्डलू ।",
+        desc: "The devoted seeker in white garments holding a sacred Japamala (rosary) and brass Kamandalu. Blesses seekers with ascetic calm, boundless wisdom, and penance.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#042f1a"/>
+            <g transform="translate(100, 95)">
+              <circle cx="0" cy="0" r="54" stroke="#86efac" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6"/>
+              ${Array.from({length: 16}).map((_, i) => {
+                const angle = (i / 16) * Math.PI * 2;
+                const bx = Math.cos(angle) * 54;
+                const by = Math.sin(angle) * 54;
+                return `<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="4.2" fill="#fef08a" stroke="#ca8a04" stroke-width="0.8"/>`;
+              }).join('')}
+              <circle cx="0" cy="54" r="6" fill="#f59e0b"/>
+            </g>
+            <path d="M92,110 Q100,105 108,110 L112,145 Q100,154 88,145 Z" fill="#f5af19" stroke="#ffd700" stroke-width="1.5"/>
+            <path d="M90,110 Q100,90 110,110" stroke="#f5af19" stroke-width="2" fill="none"/>
+            <ellipse cx="100" cy="110" rx="9" ry="3.5" fill="#fef08a"/>
+            <circle cx="100" cy="148" r="16" fill="#22c55e" opacity="0.3"/>
+            <path d="M100,132 C97,138 97,143 100,146 C103,143 103,138 100,132 Z" fill="#ffd700"/>
+          </svg>
+        `
+      },
+      {
+        day: 3,
+        tithi: "Tritiya",
+        name: "Maa Chandraghanta",
+        colorName: "Courageous Grey & Gold",
+        colorHex: "#eab308",
+        mantra: "पिण्डजप्रवरारूढा चण्डकोपास्त्रकैर्युता ।",
+        desc: "Adorned with a bell-shaped crescent moon upon her forehead. Inspires radiant bravery, destroys fear, and releases golden, tiger-like protective warrior vibrations.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1e1b4b"/>
+            <circle cx="100" cy="90" r="50" fill="radial-gradient(circle, #fde047 0%, transparent 70%)" opacity="0.4"/>
+            <path d="M75,65 A 36 36 0 0 0 125,65 A 30 30 0 0 1 75,65 Z" fill="#fef08a" filter="drop-shadow(0 0 8px #fef08a)"/>
+            <path d="M85,115 C85,92 115,92 115,115 L124,136 L76,136 Z" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5"/>
+            <circle cx="100" cy="88" r="4.5" fill="#d97706"/>
+            <path d="M72,136 Q100,142 128,136" stroke="#fbbf24" stroke-width="3"/>
+            <circle cx="100" cy="143" r="3.5" fill="#ffd700"/>
+            <path d="M40,165 L60,178 L38,190" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+            <path d="M160,165 L140,178 L162,190" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        `
+      },
+      {
+        day: 4,
+        tithi: "Chaturthi",
+        name: "Maa Kushmanda",
+        colorName: "Radiant Orange",
+        colorHex: "#f97316",
+        mantra: "सुरासम्पूर्णकलशं रुधिराप्लुतमेव च ।",
+        desc: "The cosmic creator whose sacred gentle smile birthed the universe. Radiates eternal solar energy, warming every realm of space with vitality.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1a0a2a"/>
+            <circle cx="100" cy="100" r="36" fill="#ff7800"/>
+            <circle cx="100" cy="100" r="26" fill="#ffea00"/>
+            <ellipse cx="100" cy="100" rx="75" ry="24" stroke="#ff8c2b" stroke-width="1.2" transform="rotate(-25 100 100)" stroke-dasharray="4 4"/>
+            <ellipse cx="100" cy="100" rx="75" ry="24" stroke="#ffd700" stroke-width="1.2" transform="rotate(35 100 100)" stroke-dasharray="4 4"/>
+            ${Array.from({length: 12}).map((_, i) => {
+              const ang = (i / 12) * Math.PI * 2;
+              const x1 = 100 + Math.cos(ang) * 44;
+              const y1 = 100 + Math.sin(ang) * 44;
+              const x2 = 100 + Math.cos(ang) * 62;
+              const y2 = 100 + Math.sin(ang) * 62;
+              return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>`;
+            }).join('')}
+            <circle cx="45" cy="40" r="2" fill="#fff"/>
+            <circle cx="155" cy="35" r="1.5" fill="#fff"/>
+            <circle cx="165" cy="160" r="2" fill="#fff"/>
+            <circle cx="35" cy="150" r="1.5" fill="#fff"/>
+          </svg>
+        `
+      },
+      {
+        day: 5,
+        tithi: "Panchami",
+        name: "Maa Skandamata",
+        colorName: "Compassionate White & Gold",
+        colorHex: "#f8fafc",
+        mantra: "सिंहासनगता नित्यं पद्माश्रितकरद्वया ।",
+        desc: "Mother of Lord Kartikeya (Skanda). Symbol of supreme maternal compassion, holding lotuses, blessing devotees with fearless love and spiritual purity.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#0f172a"/>
+            <ellipse cx="100" cy="165" rx="80" ry="22" fill="#0284c7" opacity="0.3"/>
+            <ellipse cx="100" cy="165" rx="60" ry="14" stroke="#38bdf8" stroke-width="1.5" fill="none" opacity="0.6"/>
+            <path d="M100,165 Q110,110 135,50" stroke="#059669" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <circle cx="135" cy="50" r="18" fill="#0284c7"/>
+            <circle cx="135" cy="50" r="12" fill="#10b981"/>
+            <circle cx="135" cy="50" r="6" fill="#1e1b4b"/>
+            <path d="M70,165 Q85,130 100,165" fill="#f8fafc" stroke="#cbd5e1"/>
+            <path d="M100,165 Q115,130 130,165" fill="#f8fafc" stroke="#cbd5e1"/>
+            <path d="M85,165 Q100,115 115,165" fill="#ffffff" stroke="#f1f5f9"/>
+            <circle cx="100" cy="152" r="4" fill="#fbbf24"/>
+          </svg>
+        `
+      },
+      {
+        day: 6,
+        tithi: "Shashthi",
+        name: "Maa Katyayani",
+        colorName: "Royal Red",
+        colorHex: "#e11d48",
+        mantra: "चन्द्रहासोज्ज्वलकरा शार्दूलवरवाहना ।",
+        desc: "Warrior aspect incarnated by sages to vanquish darkness. Rides the fierce lion, brandishing the flashing Chandrahasa sword with majestic grace.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#4c0519"/>
+            <circle cx="100" cy="95" r="54" fill="#be123c" opacity="0.4"/>
+            <path d="M50,165 Q60,135 85,135 Q100,120 120,130 Q145,135 155,165 L165,185 L40,185 Z" fill="#9f1239"/>
+            <circle cx="125" cy="132" r="14" fill="#9f1239"/>
+            <path d="M70,50 L135,110 L130,115 L65,55 Z" fill="#f8fafc" stroke="#fbbf24" stroke-width="1"/>
+            <path d="M60,40 L75,55 L55,75 Z" fill="#fbbf24"/>
+            <circle cx="58" cy="48" r="3" fill="#be123c"/>
+            <circle cx="55" cy="100" r="4" fill="#f43f5e"/>
+            <circle cx="150" cy="80" r="5" fill="#f43f5e"/>
+            <circle cx="165" cy="120" r="3.5" fill="#fb7185"/>
+          </svg>
+        `
+      },
+      {
+        day: 7,
+        tithi: "Saptami",
+        name: "Maa Kalaratri",
+        colorName: "Deep Royal Blue",
+        colorHex: "#2563eb",
+        mantra: "एकवेणी जपाकर्णपूरा नग्ना खरास्थिता ।",
+        desc: "Destroyer of darkness, fears, and internal illusions. The midnight star goddess who protects devotees under a cosmic canopy of celestial thunder and stars.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#090d16"/>
+            <circle cx="100" cy="100" r="65" fill="#1e3a8a" opacity="0.35"/>
+            <polyline points="105,30 92,85 112,95 88,160" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 8px #93c5fd)"/>
+            <circle cx="100" cy="100" r="50" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6 6"/>
+            <circle cx="45" cy="50" r="1.5" fill="#ffffff"/>
+            <circle cx="150" cy="45" r="2" fill="#ffffff"/>
+            <circle cx="160" cy="140" r="1.5" fill="#ffffff"/>
+            <circle cx="40" cy="130" r="2" fill="#ffffff"/>
+          </svg>
+        `
+      },
+      {
+        day: 8,
+        tithi: "Ashtami",
+        name: "Maa Mahagauri",
+        colorName: "Auspicious Pink & White",
+        colorHex: "#ec4899",
+        mantra: "श्वेते वृषे समारूढा श्वेताम्बरधरा शुचिः ।",
+        desc: "Radiant, eternally serene goddess representing deep purification, grace, and contentment. Rides the white bull and bestows pure peace of mind.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#2d061e"/>
+            <circle cx="100" cy="100" r="55" fill="#fdf2f8" opacity="0.2"/>
+            <circle cx="100" cy="100" r="42" fill="#fbcfe8" opacity="0.4"/>
+            <path d="M70,120 Q100,70 130,120 Q100,140 70,120 Z" fill="#ffffff"/>
+            <path d="M85,115 Q100,80 115,115 Z" fill="#fce7f3"/>
+            <circle cx="100" cy="112" r="5" fill="#f472b6"/>
+            <circle cx="60" cy="65" r="3.5" fill="#ffffff" filter="drop-shadow(0 0 4px #fff)"/>
+            <circle cx="140" cy="60" r="4" fill="#ffffff" filter="drop-shadow(0 0 4px #fff)"/>
+            <circle cx="150" cy="145" r="3" fill="#ffffff"/>
+            <circle cx="50" cy="140" r="3.5" fill="#ffffff"/>
+          </svg>
+        `
+      },
+      {
+        day: 9,
+        tithi: "Navami",
+        name: "Maa Siddhidatri",
+        colorName: "Mystic Purple & Gold",
+        colorHex: "#a855f7",
+        mantra: "सिद्धगन्धर्वयक्षाद्यैरसुरैरमरैरपि ।",
+        desc: "Bestower of all eight supreme accomplishments (Ashta Siddhis) and spiritual enlightenment. Seated upon a cosmic lotus in blissful divine unity.",
+        svg: `
+          <svg class="diorama-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1e0b36"/>
+            <g transform="translate(100, 100)">
+              <circle cx="0" cy="0" r="62" stroke="#d8b4fe" stroke-width="1.5" stroke-dasharray="4 2"/>
+              <polygon points="0,-48 42,24 -42,24" stroke="#ffd700" stroke-width="1.5" fill="none"/>
+              <polygon points="0,48 -42,-24 42,-24" stroke="#c084fc" stroke-width="1.5" fill="none"/>
+              <circle cx="0" cy="0" r="12" fill="#a855f7" opacity="0.6"/>
+              <circle cx="0" cy="0" r="4" fill="#ffd700"/>
+            </g>
+            ${Array.from({length: 8}).map((_, i) => {
+              const rad = (i / 8) * Math.PI * 2;
+              const x2 = 100 + Math.cos(rad) * 85;
+              const y2 = 100 + Math.sin(rad) * 85;
+              return `<line x1="100" y1="100" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#e9d5ff" stroke-width="0.8" opacity="0.5"/>`;
+            }).join('')}
+          </svg>
+        `
+      }
+    ];
+
+    const envelopeOverlay = document.getElementById('envelopeOverlay');
+    const envelopeWrapper = document.getElementById('envelopeWrapper');
+    const appShell = document.getElementById('appShell');
+    const revealSecText = document.getElementById('revealSecText');
+    let envelopeOpened = false;
+    let autoOpenTimeout = null;
+    let countdownInterval = null;
+
+    function openEnvelope() {
+      if (envelopeOpened) return;
+      envelopeOpened = true;
+      clearTimeout(autoOpenTimeout);
+
+      // Trigger 3D flap and ribbon untie animation
+      envelopeWrapper.classList.add('opening');
+
+      // Burst petals & sparkles in celebration
+      const envRect = envelopeWrapper.getBoundingClientRect();
+      const centerX = envRect.left + envRect.width / 2;
+      const centerY = envRect.top + envRect.height / 2;
+      createPetalBurst(centerX, centerY, 45);
+
+      // Unlock audio safely on this user action
+      initAudioContext();
+      if (!isAudioPlaying) {
+        startSacredBackgroundMusic();
+      }
+
+      // Keep opened envelope visibly active with celebration animations for 7 seconds
+      let secondsLeft = 7;
+      if (revealSecText) revealSecText.innerText = secondsLeft;
+
+      countdownInterval = setInterval(() => {
+        secondsLeft--;
+        if (revealSecText && secondsLeft >= 0) {
+          revealSecText.innerText = secondsLeft;
+        }
+
+        // Release gentle ambient petals during countdown celebration
+        if (secondsLeft > 0) {
+          const rect = envelopeWrapper.getBoundingClientRect();
+          createPetalBurst(rect.left + rect.width / 2, rect.top + rect.height * 0.35, 8);
+        }
+
+        if (secondsLeft <= 0) {
+          clearInterval(countdownInterval);
+        }
+      }, 1000);
+
+      setTimeout(() => {
+        envelopeOverlay.classList.add('unveiled');
+        appShell.classList.add('revealed');
+        updateSanctuaryLayout();
+        showToast("Shubh Navratri! Jai Mata Di 🙏");
+      }, 7000);
+
+      // Remove intro from DOM after transition completes
+      setTimeout(() => {
+        envelopeOverlay.style.display = 'none';
+      }, 8200);
+    }
+
+    envelopeWrapper.addEventListener('click', openEnvelope);
+    envelopeWrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openEnvelope();
+      }
+    });
+
+    // Auto-reveal after 6 seconds if user hasn't tapped yet
+    autoOpenTimeout = setTimeout(() => {
+      if (!envelopeOpened) {
+        openEnvelope();
+      }
+    }, 6000);
+
+    // =========================================
+    // PARTICLES CANVAS PHYSICS
+    // =========================================
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const MAX_BASE_PARTICLES = 48;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class FestiveParticle {
+      constructor(isBurst = false, originX, originY) {
+        this.reset(isBurst, originX, originY);
+      }
+
+      reset(isBurst = false, originX, originY) {
+        if (isBurst && originX !== undefined) {
+          this.x = originX;
+          this.y = originY;
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 5.5 + 2.5;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.life = 1;
+          this.decay = Math.random() * 0.02 + 0.015;
+        } else {
+          this.x = Math.random() * canvas.width;
+          this.y = -20 - Math.random() * 40;
+          this.vx = (Math.random() - 0.5) * 1.6;
+          this.vy = Math.random() * 1.5 + 1.2;
+          this.life = 1;
+          this.decay = 0;
+        }
+
+        this.type = Math.random() > 0.35 ? 'petal' : 'sparkle';
+        this.size = this.type === 'petal' ? Math.random() * 8 + 8 : Math.random() * 3.5 + 2;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.vRot = (Math.random() - 0.5) * 0.06;
+
+        const palette = ['#ff8c2b', '#ffa500', '#ffd700', '#e11d48', '#ff6f00', '#f43f5e'];
+        this.color = palette[Math.floor(Math.random() * palette.length)];
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.vRot;
+
+        if (this.decay > 0) {
+          this.life -= this.decay;
+        } else {
+          this.vx += Math.sin(this.y * 0.02) * 0.035;
+          if (this.y > canvas.height + 30) {
+            this.reset();
+          }
+        }
+      }
+
+      draw() {
+        if (this.life <= 0) return;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = Math.max(0, this.life * 0.88);
+
+        if (this.type === 'petal') {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size * 0.7);
+          ctx.quadraticCurveTo(this.size * 0.65, 0, 0, this.size * 0.7);
+          ctx.quadraticCurveTo(-this.size * 0.65, 0, 0, -this.size * 0.7);
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size * 0.5);
+          ctx.lineTo(0, this.size * 0.5);
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = '#fff4ba';
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 9;
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < MAX_BASE_PARTICLES; i++) {
+      const p = new FestiveParticle();
+      p.y = Math.random() * canvas.height;
+      particles.push(p);
+    }
+
+    function createPetalBurst(x, y, count = 24) {
+      for (let i = 0; i < count; i++) {
+        particles.push(new FestiveParticle(true, x, y));
+      }
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+        if (p.decay > 0 && p.life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animateCanvas);
+    }
+    requestAnimationFrame(animateCanvas);
+
+    let audioCtx = null;
+    let isAudioPlaying = false;
+    let masterMusicGain = null;
+    let musicNodes = [];
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function startSacredBackgroundMusic() {
+      if (isAudioPlaying) return;
+      const actx = initAudioContext();
+      const now = actx.currentTime;
+
+      masterMusicGain = actx.createGain();
+      masterMusicGain.gain.setValueAtTime(0.0001, now);
+      masterMusicGain.gain.exponentialRampToValueAtTime(0.24, now + 2.0);
+      masterMusicGain.connect(actx.destination);
+
+      const droneFrequencies = [146.83, 220.00, 293.66, 370.00];
+
+      musicNodes = droneFrequencies.map((f, i) => {
+        const osc = actx.createOscillator();
+        const lfo = actx.createOscillator();
+        const lfoGain = actx.createGain();
+        const filter = actx.createBiquadFilter();
+
+        osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(f, now);
+
+        lfo.frequency.setValueAtTime(0.22 + i * 0.08, now);
+        lfoGain.gain.setValueAtTime(1.8, now);
+        lfo.connect(osc.frequency);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(780, now);
+
+        osc.connect(filter);
+        filter.connect(masterMusicGain);
+
+        lfo.start(now);
+        osc.start(now);
+
+        return { osc, lfo };
+      });
+
+      isAudioPlaying = true;
+      updateAudioToggleUI(true);
+    }
+
+    function stopSacredBackgroundMusic() {
+      if (!isAudioPlaying || !masterMusicGain) return;
+      const actx = initAudioContext();
+      const now = actx.currentTime;
+
+      masterMusicGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+      setTimeout(() => {
+        musicNodes.forEach(n => {
+          try {
+            n.osc.stop();
+            n.lfo.stop();
+          } catch(e){}
+        });
+        musicNodes = [];
+        masterMusicGain = null;
+        isAudioPlaying = false;
+        updateAudioToggleUI(false);
+      }, 1300);
+    }
+
+    function playTempleBellSound() {
+      if (CUSTOM_BELL_AUDIO_PATH) {
+        try {
+          const snd = new Audio(CUSTOM_BELL_AUDIO_PATH);
+          snd.play().catch(e => console.warn(e));
+          return;
+        } catch(e) {}
+      }
+
+      const actx = initAudioContext();
+      const now = actx.currentTime;
+      const bellFreqs = [880, 1760, 2640, 3200, 4400, 587];
+      const bellGains = [0.45, 0.28, 0.16, 0.08, 0.05, 0.3];
+      const decaySec = 2.8;
+
+      const master = actx.createGain();
+      master.gain.setValueAtTime(0.75, now);
+      master.connect(actx.destination);
+
+      bellFreqs.forEach((freq, idx) => {
+        const osc = actx.createOscillator();
+        const g = actx.createGain();
+
+        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 5, now);
+
+        g.gain.setValueAtTime(bellGains[idx], now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + decaySec);
+
+        osc.connect(g);
+        g.connect(master);
+
+        osc.start(now);
+        osc.stop(now + decaySec);
+      });
+    }
+
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    const audioIcon = document.getElementById('audioIcon');
+
+    function updateAudioToggleUI(playing) {
+      if (playing) {
+        audioIcon.className = 'fa-solid fa-volume-high';
+        audioToggleBtn.classList.add('audio-playing');
+      } else {
+        audioIcon.className = 'fa-solid fa-volume-xmark';
+        audioToggleBtn.classList.remove('audio-playing');
+      }
+    }
+
+    audioToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isAudioPlaying) {
+        stopSacredBackgroundMusic();
+        showToast("Spiritual tune paused");
+      } else {
+        startSacredBackgroundMusic();
+        showToast("Spiritual tune playing 🎶");
+      }
+    });
+
+    const sanctuary = document.getElementById('durgaSanctuary');
+    const thali = document.getElementById('thaliContainer');
+    const durgaFrame = document.getElementById('durgaFrame');
+    const leftPupil = document.getElementById('leftPupil');
+    const rightPupil = document.getElementById('rightPupil');
+    const sacredHalo = document.getElementById('sacredHalo');
+
+    let isDragging = false;
+    let sanctuaryCenter = { x: 0, y: 0 };
+    let sanctuaryRadius = 180;
+    let isAutoAartiActive = false;
+    let autoAartiTimer = null;
+    // Initial resting position in upper-left quadrant (-135 degrees = 225 degrees)
+    let autoAartiAngle = -2.356; // ~ -135 degrees in radians
+
+    function updateSanctuaryLayout() {
+      const rect = sanctuary.getBoundingClientRect();
+      sanctuaryCenter = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+      // Keep thali orbit on the outer perimeter (48% of bounding box), well outside Maa Durga
+      sanctuaryRadius = Math.min(rect.width, rect.height) * 0.48;
+      
+      // Update thali location along the outer orbit
+      const initX = Math.cos(autoAartiAngle) * sanctuaryRadius;
+      const initY = Math.sin(autoAartiAngle) * sanctuaryRadius;
+      setThaliPosition(initX, initY);
+    }
+    window.addEventListener('resize', updateSanctuaryLayout);
+    window.addEventListener('scroll', updateSanctuaryLayout);
+
+    function setThaliPosition(xRel, yRel) {
+      const cX = sanctuary.clientWidth / 2;
+      const cY = sanctuary.clientHeight / 2;
+      thali.style.left = `${cX + xRel}px`;
+      thali.style.top = `${cY + yRel}px`;
+
+      const angle = Math.atan2(yRel, xRel);
+      thali.style.transform = `translate(-50%, -50%) rotate(${angle * 0.3}rad)`;
+
+      const tiltX = (xRel / sanctuaryRadius) * 4;
+      const tiltY = (yRel / sanctuaryRadius) * 4;
+      durgaFrame.style.transform = `perspective(600px) rotateY(${tiltX}deg) rotateX(${-tiltY}deg)`;
+
+      const eyeShiftX = Math.max(-2.5, Math.min(2.5, (xRel / sanctuaryRadius) * 2.2));
+      const eyeShiftY = Math.max(-1.5, Math.min(1.8, (yRel / sanctuaryRadius) * 1.5));
+      if (leftPupil && rightPupil) {
+        leftPupil.setAttribute('cx', 145 + eyeShiftX);
+        leftPupil.setAttribute('cy', 137.5 + eyeShiftY);
+        rightPupil.setAttribute('cx', 175 + eyeShiftX);
+        rightPupil.setAttribute('cy', 137.5 + eyeShiftY);
+      }
+    }
+
+    thali.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      isDragging = true;
+      if (isAutoAartiActive) stopAutoAarti();
+      updateSanctuaryLayout();
+      thali.setPointerCapture(e.pointerId);
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - sanctuaryCenter.x;
+      const dy = e.clientY - sanctuaryCenter.y;
+      const angle = Math.atan2(dy, dx);
+      autoAartiAngle = angle;
+      const targetX = Math.cos(angle) * sanctuaryRadius;
+      const targetY = Math.sin(angle) * sanctuaryRadius;
+      setThaliPosition(targetX, targetY);
+
+      if (Math.random() < 0.28) {
+        const rect = thali.getBoundingClientRect();
+        createPetalBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 2);
+      }
+    });
+
+    window.addEventListener('pointerup', (e) => {
+      if (isDragging) {
+        isDragging = false;
+        try { thali.releasePointerCapture(e.pointerId); } catch(err){}
+      }
+    });
+
+    function startAutoAarti() {
+      isAutoAartiActive = true;
+      document.getElementById('aartiRotateIcon').classList.add('fa-spin');
+      document.getElementById('autoAartiText').innerText = "Stop Aarti";
+
+      function loop() {
+        if (!isAutoAartiActive) return;
+        autoAartiAngle += 0.024;
+        const targetX = Math.cos(autoAartiAngle) * sanctuaryRadius;
+        const targetY = Math.sin(autoAartiAngle) * sanctuaryRadius;
+        setThaliPosition(targetX, targetY);
+
+        if (Math.random() < 0.1) {
+          const rect = thali.getBoundingClientRect();
+          createPetalBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 1);
+        }
+        autoAartiTimer = requestAnimationFrame(loop);
+      }
+      autoAartiTimer = requestAnimationFrame(loop);
+    }
+
+    function stopAutoAarti() {
+      isAutoAartiActive = false;
+      cancelAnimationFrame(autoAartiTimer);
+      document.getElementById('aartiRotateIcon').classList.remove('fa-spin');
+      document.getElementById('autoAartiText').innerText = "Auto Aarti";
+    }
+
+    document.getElementById('autoAartiBtn').addEventListener('click', () => {
+      if (isAutoAartiActive) {
+        stopAutoAarti();
+      } else {
+        updateSanctuaryLayout();
+        startAutoAarti();
+        showToast("Auto Aarti Started 🪔");
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging || !envelopeOpened) return;
+      const normX = (e.clientX / window.innerWidth - 0.5) * 6;
+      const normY = (e.clientY / window.innerHeight - 0.5) * 6;
+      durgaFrame.style.transform = `perspective(600px) rotateY(${normX}deg) rotateX(${-normY}deg)`;
+    });
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', (e) => {
+        if (!e.gamma || !e.beta || isDragging || !envelopeOpened) return;
+        const tiltX = Math.max(-8, Math.min(8, e.gamma * 0.25));
+        const tiltY = Math.max(-8, Math.min(8, (e.beta - 45) * 0.25));
+        durgaFrame.style.transform = `perspective(600px) rotateY(${tiltX}deg) rotateX(${-tiltY}deg)`;
+      });
+    }
+
+    // 108 Naam-Jap Chanting Engine
+    let chantCount = 0;
+    const MAX_CHANTS = 108;
+    const chant108Btn = document.getElementById('chant108Btn');
+    const chantCounterText = document.getElementById('chantCounterText');
+    const chantDisplayBadge = document.getElementById('chantDisplayBadge');
+    const celebrationModal = document.getElementById('celebrationModal');
+    const closeCelebrationBtn = document.getElementById('closeCelebrationBtn');
+
+    function animateFloatingMantra(startX, startY) {
+      const haloRect = sacredHalo.getBoundingClientRect();
+      const targetX = haloRect.left + haloRect.width / 2;
+      const targetY = haloRect.top + haloRect.height / 2;
+
+      const mantraEl = document.createElement('div');
+      mantraEl.className = 'floating-mantra';
+      mantraEl.innerText = "Jai Mata Di ✨";
+      document.body.appendChild(mantraEl);
+
+      const startTime = performance.now();
+      const duration = 950;
+      const cpX = (startX + targetX) / 2 + (Math.random() - 0.5) * 120;
+      const cpY = Math.min(startX, targetY) - 80;
+
+      function stepMantra(currentTime) {
+        const elapsed = currentTime - startTime;
+        const t = Math.min(1, elapsed / duration);
+
+        const currentX = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * cpX + t * t * targetX;
+        const currentY = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * cpY + t * t * targetY;
+
+        mantraEl.style.left = `${currentX}px`;
+        mantraEl.style.top = `${currentY}px`;
+        mantraEl.style.transform = `translate(-50%, -50%) scale(${1 + t * 0.35})`;
+        mantraEl.style.opacity = t > 0.8 ? `${(1 - t) * 5}` : '1';
+
+        if (t < 1) {
+          requestAnimationFrame(stepMantra);
+        } else {
+          mantraEl.remove();
+          sacredHalo.classList.add('halo-chant-pulse');
+          setTimeout(() => sacredHalo.classList.remove('halo-chant-pulse'), 350);
+          createPetalBurst(targetX, targetY, 14);
+        }
+      }
+      requestAnimationFrame(stepMantra);
+    }
+
+    chant108Btn.addEventListener('click', () => {
+      if (chantCount >= MAX_CHANTS) {
+        showToast("108 chants completed — Jai Mata Di! 🙏");
+        return;
+      }
+
+      chantCount++;
+      chantCounterText.innerText = `${chantCount} / ${MAX_CHANTS}`;
+
+      if (navigator.vibrate) navigator.vibrate(35);
+
+      const btnRect = chant108Btn.getBoundingClientRect();
+      const btnCenterX = btnRect.left + btnRect.width / 2;
+      const btnCenterY = btnRect.top + btnRect.height / 2;
+
+      animateFloatingMantra(btnCenterX, btnCenterY);
+      createPetalBurst(btnCenterX, btnCenterY, 8);
+
+      if (chantCount === MAX_CHANTS) {
+        chantDisplayBadge.classList.add('chant-completed-badge');
+        document.body.classList.add('celebration-diyas');
+        createPetalBurst(window.innerWidth / 2, window.innerHeight * 0.3, 70);
+        setTimeout(() => {
+          celebrationModal.classList.add('active');
+        }, 900);
+      }
+    });
+
+    closeCelebrationBtn.addEventListener('click', () => {
+      celebrationModal.classList.remove('active');
+    });
+
+    const bellBtn = document.getElementById('bellBtn');
+    const bellIcon = document.getElementById('bellIcon');
+    bellBtn.addEventListener('click', () => {
+      playTempleBellSound();
+      bellIcon.classList.remove('bell-swinging');
+      void bellIcon.offsetWidth;
+      bellIcon.classList.add('bell-swinging');
+
+      if (navigator.vibrate) navigator.vibrate(45);
+      showToast("Bell Chimed • Jai Mata Di 🔔");
+    });
+
+    // 9 Sacred Days Showcase
+    const daysGrid = document.getElementById('daysGrid');
+    const dayFormName = document.getElementById('dayFormName');
+    const dayMantraText = document.getElementById('dayMantraText');
+    const dayFormDesc = document.getElementById('dayFormDesc');
+    const dayPillDot = document.getElementById('dayPillDot');
+    const dayPillText = document.getElementById('dayPillText');
+    const dayStageContainer = document.getElementById('dayStageContainer');
+    const dioramaFrame = document.getElementById('dioramaFrame');
+
+    function selectDay(index) {
+      const item = NAVDURGA_DATA[index];
+      document.querySelectorAll('.day-btn').forEach((b, i) => {
+        b.classList.toggle('active', i === index);
+      });
+
+      document.documentElement.style.setProperty('--active-day-color', item.colorHex);
+      dayFormName.innerText = `Day ${item.day} (${item.tithi}): ${item.name}`;
+      dayMantraText.innerText = item.mantra;
+      dayFormDesc.innerText = item.desc;
+      dayPillDot.style.backgroundColor = item.colorHex;
+      dayPillText.innerText = item.colorName;
+      dayStageContainer.style.borderColor = item.colorHex;
+
+      dioramaFrame.style.transform = 'scale(0.85) rotateY(40deg)';
+      dioramaFrame.style.opacity = '0';
+      setTimeout(() => {
+        dioramaFrame.innerHTML = item.svg;
+        dioramaFrame.style.transition = 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        dioramaFrame.style.transform = 'scale(1) rotateY(0deg)';
+        dioramaFrame.style.opacity = '1';
+      }, 160);
+    }
+
+    NAVDURGA_DATA.forEach((item, index) => {
+      const btn = document.createElement('button');
+      btn.className = `day-btn ${index === 0 ? 'active' : ''}`;
+      btn.setAttribute('aria-label', `Day ${item.day}: ${item.name}`);
+      btn.innerHTML = `
+        <span class="day-color-dot" style="background-color: ${item.colorHex};"></span>
+        <span class="day-label">Day ${item.day}</span>
+      `;
+      btn.addEventListener('click', () => {
+        selectDay(index);
+        const rect = btn.getBoundingClientRect();
+        createPetalBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 10);
+      });
+      daysGrid.appendChild(btn);
+    });
+
+    selectDay(0);
+
+    // Custom Image Fallback for Maa Durga Hero
+    function verifyCustomImage() {
+      const img = new Image();
+      img.src = DURGA_CUSTOM_IMAGE_URL;
+      img.onload = () => {
+        durgaFrame.innerHTML = '';
+        const imgEl = document.createElement('img');
+        imgEl.src = DURGA_CUSTOM_IMAGE_URL;
+        imgEl.alt = "Maa Durga 3D Divine Presence";
+        imgEl.className = "durga-artwork";
+        durgaFrame.appendChild(imgEl);
+      };
+      img.onerror = () => {
+        // Retains graceful vector artwork fallback
+      };
+    }
+    verifyCustomImage();
+
+    // Toast Notification Utility
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toastMsg');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+  </script>
+</body>
+</html>
